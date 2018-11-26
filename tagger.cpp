@@ -350,16 +350,19 @@ bool TaggerImpl::add(const char* line) {
   scoped_fixed_array<const char *, 8192> column;
   const size_t size = tokenize2(p, "\t ", column.get(), column.size());
   if (!add2(size, column.get(), false)) {
+    printf("error on line %d\n", lineno_);
     return false;
   }
   return true;
 }
 
 bool TaggerImpl::read(std::istream *is) {
+  lineno_ = 0;
   scoped_fixed_array<char, 8192> line;
   clear();
 
   for (;;) {
+    lineno_ ++;
     if (!is->getline(line.get(), line.size())) {
       is->clear(std::ios::eofbit|std::ios::badbit);
       return true;

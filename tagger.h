@@ -58,7 +58,7 @@ class TaggerImpl : public Tagger {
   explicit TaggerImpl() : mode_(TEST), vlevel_(0), nbest_(0),
                           ysize_(0), Z_(0), feature_id_(0),
                           thread_id_(0), feature_index_(0),
-                          allocator_(0) {}
+                          allocator_(0), lineno_(0) {}
   virtual ~TaggerImpl() { close(); }
 
   Allocator *allocator() const {
@@ -219,6 +219,7 @@ class TaggerImpl : public Tagger {
   scoped_ptr<std::priority_queue <QueueElement*, std::vector <QueueElement *>,
                                   QueueElementComp> > agenda_;
   scoped_ptr<FreeList <QueueElement> > nbest_freelist_;
+  int lineno_;
 };
 }
 #endif

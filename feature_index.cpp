@@ -162,7 +162,9 @@ bool EncoderFeatureIndex::openTagSet(const char *filename) {
   size_t max_size = 0;
   std::set<std::string> candset;
 
+  int lineno = 0;
   while (ifs.getline(line.get(), line.size())) {
+    lineno ++;
     if (line[0] == '\0' || line[0] == ' ' || line[0] == '\t') {
       continue;
     }
@@ -173,7 +175,8 @@ bool EncoderFeatureIndex::openTagSet(const char *filename) {
     }
     CHECK_FALSE(max_size == size)
         << "inconsistent column size: "
-        << max_size << " " << size << " " << filename;
+        << max_size << " " << size << " " << filename << "(line=" 
+        << lineno << ")";
     xsize_ = size - 1;
     candset.insert(column[max_size-1]);
   }
